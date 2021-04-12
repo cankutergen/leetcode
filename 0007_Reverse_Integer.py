@@ -4,9 +4,9 @@ class Solution:
         if x < 0:
             x *= -1
             negative = True
-
+            
         number = str(x)
-
+        
         num = 0
         for i in range(len(number)):
             num += (10 ** i) * int(number[i])
