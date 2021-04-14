@@ -4,28 +4,37 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-import queue
 class Solution:
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
-        res = self.levelOrder(root, val)
-        return res
-      
-    def levelOrder(self, root: TreeNode, val):
-        q = queue.Queue()
+        # return self.dfs(root, val)
+        return self.bfs(root, val)
+        
+    def dfs(self, root, val):
+        if root is None:
+            return None
+        
+        if root.val == val:
+            return root
+        elif root.val > val:
+            return self.dfs(root.left, val)
+        elif root.val < val:
+            return self.dfs(root.right, val)
+
+    def bfs(self, root, val):
+        q = []
         
         if root:
-            q.put(root)
-        
-        while not q.empty():
-            node = q.get()
+            q.append(root)
+            
+        while len(q) > 0:
+            node = q.pop(0)
+            
             if node.val == val:
                 return node
-
-            if node.left is not None:
-                q.put(node.left)
-
-            if node.right is not None:
-                q.put(node.right)
+            elif node.val > val and node.left:
+                q.append(node.left)
+            elif node.val < val and node.right:
+                q.append(node.right)
                 
         return None
 
