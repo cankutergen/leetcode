@@ -1,16 +1,17 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        subset = []
+        res = []
         nums.sort()
+        self.dfs(nums, 0, [], res)
         
-        def backtrack(index, curr, nums):
-            if curr not in subset:
-                subset.append(curr.copy())
+        return res
+    
+    def dfs(self, nums, index, path, res):
+        res.append(path.copy())
+        for i in range(index, len(nums)):
+            if i > index and nums[i] == nums[i-1]:
+                continue
             
-            for i in range(index, len(nums)):
-                curr.append(nums[i])
-                backtrack(i + 1, curr, nums)
-                curr.pop()
-        
-        backtrack(0, [], nums)
-        return subset
+            path.append(nums[i])
+            self.dfs(nums, i+1, path, res)
+            path.pop()
