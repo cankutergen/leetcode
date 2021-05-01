@@ -1,12 +1,23 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        count = 1
-        for i in range(len(chars)-1,-1,-1):
-            if i and chars[i]==chars[i-1]:
-                count += 1
-                chars.pop(i)
-            else:
-                if count>1:
-                    for item in str(count)[::-1]:
-                        chars.insert(i+1, item)
-                    count = 1
+        index = 0
+        i = 0
+        
+        while i < len(chars):
+            j = i
+            
+            while j < len(chars) and chars[i] == chars[j]:
+                j += 1
+                
+            chars[index] = chars[i]
+            index += 1
+            
+            if (j - i) > 1:
+                count = str(j - i)
+                for char in count:
+                    chars[index] = char
+                    index += 1
+                    
+            i = j
+        
+        return index
